@@ -28,6 +28,10 @@ const ChessBoard = ({ board, socket, onPieceMove }) => {
     }
   };
 
+  const handlePieceColor = (sq) => {
+    console.log(sq);
+  };
+
   const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const numbers = [8, 7, 6, 5, 4, 3, 2, 1];
 
@@ -61,7 +65,10 @@ const ChessBoard = ({ board, socket, onPieceMove }) => {
                     (i + j) % 2 === 0 ? "bg-blue-900" : "bg-blue-200"
                   }`}
                 >
-                  <div className="w-full justify-center flex h-full">
+                  <div
+                    className="w-full justify-center flex h-full"
+                    onClick={() => handlePieceColor(square)}
+                  >
                     <div className="h-full justify-center flex flex-col text-black">
                       {/* arranged pieces svg names based on the square objects type
                       notation */}

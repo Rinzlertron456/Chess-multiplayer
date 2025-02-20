@@ -14,6 +14,7 @@ const Game = () => {
   const [board, setBoard] = useState(chess.board());
   const [dots, setDots] = useState("");
   const [started, setStarted] = useState(false);
+  const [party, setParty] = useState(null);
 
   useEffect(() => {
     if (!socket) return;
@@ -63,8 +64,13 @@ const Game = () => {
 
   const handleMoves = ({ from, to }) => {
     console.log({ from, to });
-    chess.move({ from, to });
-    setBoard(chess.board());
+    /* */
+    try {
+      chess.move({ from, to });
+      setBoard(chess.board());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!socket) {
@@ -96,6 +102,11 @@ const Game = () => {
               <div className="text-2xl text-white">
                 the game has been started
               </div>
+            )}
+            {party ? (
+              <div className="text-2xl text-white">{party}'s move</div>
+            ) : (
+              <div className="text-2xl text-white">White's move</div>
             )}
           </div>
         </div>
