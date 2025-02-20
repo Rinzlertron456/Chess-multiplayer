@@ -15,37 +15,56 @@ const Game = () => {
   const [dots, setDots] = useState("");
   const [started, setStarted] = useState(false);
   const [party, setParty] = useState(null);
+  const [showStartedMessage, setShowStartedMessage] = useState(false);
 
   useEffect(() => {
     if (!socket) return;
 
     socket.onmessage = (e) => {
       const message = JSON.parse(e.data);
+      console.log(message, "at client");
 
       switch (message.type) {
         case INIT_GAME:
           const newGame = new Chess();
-          // setChess(newGame);
           setBoard(newGame.board());
           setStarted(true);
-          console.log("Game Initialized");
+          setShowStartedMessage(true);
+          setParty(message.payload.color);
+          console.log("Game Initialized with", message.payload.color);
+
+          setTimeout(() => {
+            setShowStartedMessage(false);
+          }, 3000); // Hide message after 3s
           break;
+
         case MOVE:
           const move = message.payload;
           chess.move(move);
           setBoard(chess.board());
           console.log("Move Made");
           break;
+
         case GAME_OVER:
           console.log("Game Over");
           break;
+
         default:
           break;
       }
     };
+    socket.onerror = (e) => {
+      const message = JSON.parse(e.data);
+      try {
+        if (message.error) alert("Invalid move");
+        else alert("An unknown error occurred");
+      } catch (error) {
+        console.error("Error parsing error message:", error);
+        alert("An error occurred while processing the error message.");
+      }
+    };
   }, [socket]);
 
-  // Dot Animation Effect
   useEffect(() => {
     const interval = setInterval(() => {
       setDots((prev) => (prev.length < 4 ? prev + "." : ""));
@@ -64,13 +83,8 @@ const Game = () => {
 
   const handleMoves = ({ from, to }) => {
     console.log({ from, to });
-    /* */
-    try {
-      chess.move({ from, to });
-      setBoard(chess.board());
-    } catch (error) {
-      console.log(error);
-    }
+    chess.move({ from, to });
+    setBoard(chess.board());
   };
 
   if (!socket) {
@@ -85,28 +99,45 @@ const Game = () => {
     <div className="justify-center flex">
       <div className="pt-8 max-w-screen-lg w-full">
         <div className="grid grid-cols-6 gap-4 w-full">
+          {/* Chess Board with Flipping Logic */}
           <div className="col-span-4 w-full flex justify-center">
-            <ChessBoard
-              onPieceMove={({ from, to }) => handleMoves({ from, to })}
-              socket={socket}
-              board={board}
-            />
+            <div
+              className={`transform ${
+                party === "black" ? "rotate-360" : ""
+              } transition-transform`}
+            >
+              <ChessBoard
+                onPieceMove={({ from, to }) => handleMoves({ from, to })}
+                socket={socket}
+                board={board}
+                party={party}
+              />
+            </div>
           </div>
-          <div className="col-span-2 bg-slate-900 w-full flex justify-center">
+
+          {/* Right-Side UI */}
+          <div className="col-span-2 bg-slate-900 w-full flex flex-col items-center py-8 relative">
+            {/* Play Button Sticks to Top */}
             {!started && (
-              <div className="pt-8">
-                <Button onClick={handleGamePlay}>Play Now</Button>
+              <div className="absolute top-4">
+                <Button onClick={handleGamePlay} className="text-lg px-6 py-3">
+                  Play Now
+                </Button>
               </div>
             )}
-            {started && (
-              <div className="text-2xl text-white">
-                the game has been started
+
+            {/* "Game Started" Message (Fades Away) */}
+            {showStartedMessage && (
+              <div className="mt-16 text-2xl font-semibold text-white bg-green-600 px-6 py-3 rounded-lg shadow-lg animate-fade-out">
+                The game has started!
               </div>
             )}
-            {party ? (
-              <div className="text-2xl text-white">{party}'s move</div>
-            ) : (
-              <div className="text-2xl text-white">White's move</div>
+
+            {/* Show Current Player */}
+            {party && (
+              <div className="mt-4 text-xl font-medium text-white bg-blue-500 px-6 py-3 rounded-lg shadow-md">
+                {`You are ${party.toUpperCase()}'s now`}
+              </div>
             )}
           </div>
         </div>

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/ws": "^8.5.13",
+    "backend": "file:",
     "chess.js": "^1.0.0",
     "tsc": "^2.0.4",
     "tsx": "^4.19.2",
