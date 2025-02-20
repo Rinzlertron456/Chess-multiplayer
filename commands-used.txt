@@ -1,0 +1,19 @@
+//backend
+npm init -y
+npm install typescript
+npx tsc --init
+
+npm i ws
+npm i @types/ws
+
+tsc -b //compiling ts code -b
+
+node dist/index.js //to start backend
+
+
+
+//frontend
+npm create vite@latest
+
+npm install -D tailwindcss
+npx tailwindcss init
