@@ -81,17 +81,10 @@ const Game = () => {
     try {
       const move = chess.move({ from, to });
       if (move) setBoard(chess.board());
-<<<<<<< HEAD
       else alert("Invalid move");
     } catch (error) {
       console.error(error.message);
       alert("Invalid action");
-=======
-      // else throw new Error("Invalid move");
-    } catch (error) {
-      console.error(error.message);
-      alert("Invalid move");
->>>>>>> 03372635fd5190265e313e4e48195d091cec1aa9
     }
     // chess.move({ from, to });
     // setBoard(chess.board());
