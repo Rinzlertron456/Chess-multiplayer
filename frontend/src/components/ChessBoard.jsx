@@ -20,12 +20,33 @@ const ChessBoard = ({ board, socket, onPieceMove, party }) => {
     }
   }, [from, to]);
 
-  const handleSquares = (convertedSq) => {
-    if (!from) {
-      setFrom(convertedSq);
-    } else {
-      setTo(convertedSq);
+  const handleSquares = (convertedSq, sqColor) => {
+    // Chess Piece Validation to ensure opposite chess pieces positions remain intact
+    console.log(convertedSq);
+    console.log(sqColor);
+    console.log(party[0]);
+    //Current try-catch block validation for opposite color piece moves
+    try {
+      if (!from) {
+        if (sqColor === party[0]) {
+          setFrom(convertedSq);
+        } else {
+          alert("Invalid action");
+        }
+      } else {
+        setTo(convertedSq);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Invalid action");
     }
+
+    //Working Validation
+    // if (!from && sqColor === party[0]) {
+    //   setFrom(convertedSq);
+    // } else {
+    //   setTo(convertedSq);
+    // }
   };
 
   // Flip board for black player
@@ -71,7 +92,7 @@ const ChessBoard = ({ board, socket, onPieceMove, party }) => {
 
               return (
                 <div
-                  onClick={() => handleSquares(convertedSquare)}
+                  onClick={() => handleSquares(convertedSquare, square?.color)}
                   key={j}
                   className={`w-16 h-16 ${
                     (realI + realJ) % 2 === 0 ? "bg-blue-900" : "bg-blue-200"

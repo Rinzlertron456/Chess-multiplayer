@@ -77,8 +77,17 @@ const Game = () => {
 
   const handleMoves = ({ from, to }) => {
     console.log({ from, to });
-    chess.move({ from, to });
-    setBoard(chess.board());
+    // Try Catch Error Handling
+    try {
+      const move = chess.move({ from, to });
+      if (move) setBoard(chess.board());
+      else alert("Invalid move");
+    } catch (error) {
+      console.error(error.message);
+      alert("Invalid action");
+    }
+    // chess.move({ from, to });
+    // setBoard(chess.board());
   };
 
   const handleLoginData = (data) => {
