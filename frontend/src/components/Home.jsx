@@ -18,14 +18,25 @@ const Home = () => {
               </h1>
             </div>
 
-            <div className="mt-4 flex justify-center">
-              <Button
-                onClick={() => {
-                  navigate("/game");
-                }}
-              >
-                Go to Game Page
-              </Button>
+            <div className="mt-4 flex flex-col gap-3.5 justify-center">
+              <div className="pt-3">
+                <Button
+                  onClick={() => {
+                    navigate("/game");
+                  }}
+                >
+                  Play Online
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
+                  Register
+                </Button>
+              </div>
             </div>
           </div>
         </div>

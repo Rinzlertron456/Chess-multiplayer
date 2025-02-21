@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import ChessBoard from "./ChessBoard";
 import { Chess } from "chess.js";
 import { useSocket } from "./customhooks/useSocket";
-import Button from "./Button";
+import Login from "./Login";
+import { USER_DATA } from "../constants/userData";
 
 export const INIT_GAME = "init_game";
 export const MOVE = "move";
@@ -13,6 +14,7 @@ const Game = () => {
   const [chess, setChess] = useState(new Chess());
   const [board, setBoard] = useState(chess.board());
   const [dots, setDots] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
   const [started, setStarted] = useState(false);
   const [party, setParty] = useState(null);
   const [showStartedMessage, setShowStartedMessage] = useState(false);
@@ -53,16 +55,6 @@ const Game = () => {
           break;
       }
     };
-    socket.onerror = (e) => {
-      const message = JSON.parse(e.data);
-      try {
-        if (message.error) alert("Invalid move");
-        else alert("An unknown error occurred");
-      } catch (error) {
-        console.error("Error parsing error message:", error);
-        alert("An error occurred while processing the error message.");
-      }
-    };
   }, [socket]);
 
   useEffect(() => {
@@ -71,6 +63,8 @@ const Game = () => {
     }, 500);
     return () => clearInterval(interval);
   }, []);
+
+  const handleLogin = () => {};
 
   const handleGamePlay = () => {
     socket.send(
@@ -85,6 +79,24 @@ const Game = () => {
     console.log({ from, to });
     chess.move({ from, to });
     setBoard(chess.board());
+  };
+
+  const handleLoginData = (data) => {
+    console.log(data);
+    let dbData = USER_DATA;
+    let email = data.username;
+    let pass = data.password;
+    if (!loginStatus) {
+      dbData.forEach((record) => {
+        if (email === record.username && pass === record.password) {
+          setLoginStatus(true);
+        } else {
+          console.log("wrong credentials");
+        }
+      });
+    } else {
+      console.log("error");
+    }
   };
 
   if (!socket) {
@@ -116,13 +128,19 @@ const Game = () => {
           </div>
 
           {/* Right-Side UI */}
-          <div className="col-span-2 bg-slate-900 w-full flex flex-col items-center py-8 relative">
+          <div className="">
             {/* Play Button Sticks to Top */}
             {!started && (
-              <div className="absolute top-4">
-                <Button onClick={handleGamePlay} className="text-lg px-6 py-3">
-                  Play Now
-                </Button>
+              <div className="absolute top-4 flex flex-col gap-4">
+                <div>
+                  <Login
+                    handleGamePlay={handleGamePlay}
+                    loginStatus={loginStatus}
+                    handleLoginData={({ username, password }) =>
+                      handleLoginData({ username, password })
+                    }
+                  />
+                </div>
               </div>
             )}
 
