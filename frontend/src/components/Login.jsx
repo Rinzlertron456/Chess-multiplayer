@@ -37,7 +37,7 @@ const Login = ({ handleGamePlay, loginStatus, handleLoginData }) => {
             </div>
           </div>
         ) : null}
-
+        {/* {console.log("loginStatus", loginStatus)} */}
         {loginStatus ? (
           <Button onClick={handleGamePlay} className="text-lg px-6 py-3">
             Play Now

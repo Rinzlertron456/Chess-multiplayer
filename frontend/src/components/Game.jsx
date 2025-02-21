@@ -17,6 +17,7 @@ const Game = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const [started, setStarted] = useState(false);
   const [party, setParty] = useState(null);
+  // const [found, setFound] = useState(false);
   const [showStartedMessage, setShowStartedMessage] = useState(false);
 
   useEffect(() => {
@@ -93,12 +94,16 @@ const Game = () => {
   const handleLoginData = (data) => {
     console.log(data);
     let dbData = USER_DATA;
+    // console.log(dbData.includes(data.username));
     let email = data.username;
     let pass = data.password;
     if (!loginStatus) {
       dbData.forEach((record) => {
+        // if (!found) return;
         if (email === record.username && pass === record.password) {
           setLoginStatus(true);
+          console.log("correct credentials");
+          // setFound(true);
         } else {
           console.log("wrong credentials");
         }
@@ -106,6 +111,7 @@ const Game = () => {
     } else {
       console.log("error");
     }
+    // return loginStatus;
   };
 
   if (!socket) {
@@ -145,6 +151,7 @@ const Game = () => {
                   <Login
                     handleGamePlay={handleGamePlay}
                     loginStatus={loginStatus}
+                    // found={found}
                     handleLoginData={({ username, password }) =>
                       handleLoginData({ username, password })
                     }
