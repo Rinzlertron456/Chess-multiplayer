@@ -17,8 +17,9 @@ const Game = () => {
   const [loginStatus, setLoginStatus] = useState(false);
   const [started, setStarted] = useState(false);
   const [party, setParty] = useState(null);
-  // const [found, setFound] = useState(false);
   const [showStartedMessage, setShowStartedMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loginMessage, setLoginMessage] = useState("");
 
   useEffect(() => {
     if (!socket) return;
@@ -65,8 +66,6 @@ const Game = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleLogin = () => {};
-
   const handleGamePlay = () => {
     socket.send(
       JSON.stringify({
@@ -77,41 +76,43 @@ const Game = () => {
   };
 
   const handleMoves = ({ from, to }) => {
-    console.log({ from, to });
-    // Try Catch Error Handling
     try {
-      const move = chess.move({ from, to });
-      if (move) setBoard(chess.board());
-      else alert("Invalid move");
+      chess.move({ from, to });
+      setBoard(chess.board());
     } catch (error) {
-      console.error(error.message);
-      alert("Invalid action");
+      // console.log("Invalid move", error);
+      setErrorMessage("Invalid Move");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
     }
-    // chess.move({ from, to });
-    // setBoard(chess.board());
   };
 
   const handleLoginData = (data) => {
     console.log(data);
-    let dbData = USER_DATA;
-    // console.log(dbData.includes(data.username));
     let email = data.username;
     let pass = data.password;
+
     if (!loginStatus) {
-      dbData.forEach((record) => {
-        // if (!found) return;
-        if (email === record.username && pass === record.password) {
-          setLoginStatus(true);
-          console.log("correct credentials");
-          // setFound(true);
-        } else {
-          console.log("wrong credentials");
-        }
-      });
+      let userFound = USER_DATA.find(
+        (record) => record.username === email && record.password === pass
+      );
+
+      if (userFound) {
+        setLoginStatus(true);
+        setLoginMessage("Logged in successfully");
+        setTimeout(() => {
+          setLoginMessage("");
+        }, 3000);
+      } else {
+        setLoginMessage("Wrong Credentials");
+        setTimeout(() => {
+          setLoginMessage("");
+        }, 3000);
+      }
     } else {
       console.log("error");
     }
-    // return loginStatus;
   };
 
   if (!socket) {
@@ -138,6 +139,7 @@ const Game = () => {
                 socket={socket}
                 board={board}
                 party={party}
+                errorMessage={errorMessage}
               />
             </div>
           </div>
@@ -151,10 +153,10 @@ const Game = () => {
                   <Login
                     handleGamePlay={handleGamePlay}
                     loginStatus={loginStatus}
-                    // found={found}
                     handleLoginData={({ username, password }) =>
                       handleLoginData({ username, password })
                     }
+                    loginMessage={loginMessage}
                   />
                 </div>
               </div>
