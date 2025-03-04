@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, "src/index.html"), // Update this path if your index.html is in a different directory
+        main: path.resolve(__dirname, "./index.html"), // Update this path if your index.html is in a different directory
       },
     },
   },
