@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build --logLevel info",
-    "serve": "vite preview",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
