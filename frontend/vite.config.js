@@ -6,6 +6,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   // root: path.join(__dirname, "src"), // Update this path if your index.html is in a different directory
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      external: ["chess.js"],
+    },
+  },
   // build: {
   //   rollupOptions: {
   //     input: {
