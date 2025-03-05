@@ -9,6 +9,10 @@
     "concurrently": "^8.2.1"
   },
   "dependencies": {
-    "chess-app": "file:"
+    "chess-app": "file:",
+    "concurrently": "^8.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
