@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "run-p start:backend start:frontend",
+    "start": "npx run-p start:backend start:frontend",
     "start:backend": "cd backend && tsc -b && node dist/index.js",
     "start:frontend": "cd frontend && npm run dev"
   },
