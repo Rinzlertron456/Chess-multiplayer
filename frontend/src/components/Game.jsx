@@ -23,11 +23,11 @@ const Game = () => {
 
   useEffect(() => {
     if (!socket) return;
-    const apiUrl = process.env.REACT_APP_API_URL;
+    // const apiUrl = process.env.REACT_APP_API_URL;
 
-    fetch(`${apiUrl}/api/endpoint`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    // fetch(`${apiUrl}/api/endpoint`)
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
 
     socket.onmessage = (e) => {
       const message = JSON.parse(e.data);
