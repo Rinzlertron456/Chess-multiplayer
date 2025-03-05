@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx concurrently \"cd backend && tsc -b && node dist/index.js\" \"cd frontend && npm run dev\""
+    "start": "run-p start:backend start:frontend",
+    "start:backend": "cd backend && tsc -b && node dist/index.js",
+    "start:frontend": "cd frontend && npm run dev"
+  }
   },
   "devDependencies": {
     "concurrently": "^8.2.1"
   },
   "dependencies": {
     "chess-app": "file:",
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.1",
+    "npm-run-all": "^4.1.5"
   },
   "engines": {
     "node": ">=14.0.0"
