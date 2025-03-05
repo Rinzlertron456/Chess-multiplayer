@@ -23,6 +23,11 @@ const Game = () => {
 
   useEffect(() => {
     if (!socket) return;
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    fetch(`${apiUrl}/api/endpoint`)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
 
     socket.onmessage = (e) => {
       const message = JSON.parse(e.data);
@@ -134,7 +139,8 @@ const Game = () => {
                 party === "black" ? "rotate-360" : ""
               } transition-transform`}
             >
-              <ChessBoard
+              <ChessBo
+                ard
                 onPieceMove={({ from, to }) => handleMoves({ from, to })}
                 socket={socket}
                 board={board}
