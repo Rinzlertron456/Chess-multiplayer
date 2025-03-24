@@ -11,6 +11,9 @@ export default defineConfig({
       external: ["chess.js"],
     },
   },
+  optimizeDeps: {
+    include: ["chess.js"],
+  },
   // build: {
   //   rollupOptions: {
   //     input: {

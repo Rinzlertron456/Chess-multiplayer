@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import ChessBoard from "./ChessBoard";
 // import { Chess } from "chess.js";
-import * as Chess from "chess.js";
+// import * as Chess from "chess.js";
+// const { Chess } = await import("chess.js");
+let Chess;
+
+async function loadChess() {
+  const chessModule = await import("chess.js");
+  Chess = chessModule.Chess;
+}
+
+loadChess();
+
 import { useSocket } from "./customhooks/useSocket";
 import Login from "./Login";
 import { USER_DATA } from "../constants/userData";
