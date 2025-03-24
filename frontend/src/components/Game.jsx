@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ChessBoard from "./ChessBoard";
-import { Chess } from "chess.js";
+// import { Chess } from "chess.js";
+import * as Chess from "chess.js";
 import { useSocket } from "./customhooks/useSocket";
 import Login from "./Login";
 import { USER_DATA } from "../constants/userData";
