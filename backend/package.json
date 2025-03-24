@@ -23,5 +23,8 @@
     "tsc": "^2.0.4",
     "tsx": "^4.19.2",
     "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
   }
 }
