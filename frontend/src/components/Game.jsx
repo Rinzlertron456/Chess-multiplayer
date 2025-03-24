@@ -3,15 +3,15 @@ import ChessBoard from "./ChessBoard";
 // import { Chess } from "chess.js";
 // import * as Chess from "chess.js";
 // const { Chess } = await import("chess.js");
-let Chess;
+// let Chess;
 
-async function loadChess() {
-  const chessModule = await import("chess.js");
-  Chess = chessModule.Chess;
-}
+// async function loadChess() {
+//   const chessModule = await import("chess.js");
+//   Chess = chessModule.Chess;
+// }
 
-loadChess();
-
+// loadChess();
+import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@latest/+esm";
 import { useSocket } from "./customhooks/useSocket";
 import Login from "./Login";
 import { USER_DATA } from "../constants/userData";
