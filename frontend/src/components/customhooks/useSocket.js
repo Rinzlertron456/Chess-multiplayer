@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const URL = "wss://chess-multiplayer-c7t4.onrender.com:8085";
+const URL = "wss://chess-multiplayer-c7t4.onrender.com";
 
 export const useSocket = () => {
   const [socket, setSocket] = useState(null);
