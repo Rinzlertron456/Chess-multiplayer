@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ChessBoard from "./ChessBoard";
-// import { Chess } from "chess.js";
+import { Chess } from "chess.js";
 // import * as Chess from "chess.js";
 // const { Chess } = await import("chess.js");
 // let Chess;
@@ -11,7 +11,7 @@ import ChessBoard from "./ChessBoard";
 // }
 
 // loadChess();
-import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@latest/+esm";
+// import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@latest/+esm";
 import { useSocket } from "./customhooks/useSocket";
 import Login from "./Login";
 import { USER_DATA } from "../constants/userData";
@@ -150,7 +150,7 @@ const Game = () => {
                 party === "black" ? "rotate-360" : ""
               } transition-transform`}
             >
-              <ChessBo
+              <ChessBoard
                 ard
                 onPieceMove={({ from, to }) => handleMoves({ from, to })}
                 socket={socket}
