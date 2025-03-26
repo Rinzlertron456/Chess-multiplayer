@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ChessBoard from "./ChessBoard";
-import { Chess } from "chess.js/chess";
+import { Chess } from "chess.js";
 // import * as Chess from "chess.js";
 // const { Chess } = await import("chess.js");
 // let Chess;
