@@ -1,35 +1,60 @@
-import React from "react";
+import React, { useRef } from "react";
 
 const Register = () => {
+  // const username = "";
+  // const password = "";
+  const userNameElement = useRef("");
+  const userPasswordElement = useRef("");
+  const handleSubmit = (e) => {
+    // Handle form submission logic here
+    e.preventDefault();
+    console.log(
+      userNameElement.current.value + " " + userPasswordElement.current.value
+    );
+    console.log("Form submitted");
+  };
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-80 mt-4">
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-        {!loginStatus ? (
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-80">
+      <form
+        onSubmit={handleSubmit}
+        className="flex"
+        style={{ margin: "14rem auto 0 auto" }}
+      >
+        {/* {!loginStatus ? ( */}
+        <div>
           <div>
-            <div>
-              <label className="block text-sm font-medium">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+            <label className="block text-sm font-medium">Username</label>
+            <input
+              type="text"
+              // value={username}
+              ref={userNameElement}
+              className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              type="password"
+              // value={password}
+              ref={userPasswordElement}
+              // onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 mt-1 bg-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-6 py-3 rounded"
+              >
+                Register
+              </button>
             </div>
           </div>
-        ) : null}
+        </div>
+        {/* ) : null} */}
 
-        {loginStatus ? (
+        {/* {loginStatus ? (
           <Button onClick={handleGamePlay} className="text-lg px-6 py-3">
             Play Now
           </Button>
@@ -40,7 +65,7 @@ const Register = () => {
           <div className="w-full p-2 mt-1 bg-gray-700 rounded">
             {loginMessage}
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );
