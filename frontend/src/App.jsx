@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Register from "./components/Register";
-import Login from "./components/Login";
 function App() {
   return (
     <div className="h-screen bg-slate-950">
